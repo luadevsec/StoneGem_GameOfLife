@@ -12,9 +12,8 @@ func gerar_grid(tamanho)
 func exibir_grid(grid)
     var full = "██"
     var empt = "  "
-    for linha = 0..grid.Count():
-        for celula = 0..linha.Count():
-            print(full if celula == 1 else empt, end='')
+    for linha = 0..grid.Count()
+        for celula = 0..linha.Count()
             ? celula = 1
                 > `@celula * 2@,@linha@,@full@
             :
@@ -50,7 +49,7 @@ func executar_vida(grid)
                 novo_grid[linha][coluna] = 0
             :? estado_atual = 1 & (vizinhos_vivos = 2 | vizinhos_vivos = 3)
                 novo_grid[linha][coluna] = 1
-            :? estado_atual = 0 and vizinhos_vivos = 3
+            :? estado_atual = 0 & vizinhos_vivos = 3
                 novo_grid[linha][coluna] = 1
             :
                 novo_grid[linha][coluna] = estado_atual
