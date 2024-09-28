@@ -60,9 +60,8 @@ func jogar_vida(iteracoes, tamanho)
         tamanho = 10
     var grid = gerar_grid(tamanho)
     for i = 0..iteracoes
-        sleep(0.3)
         ? totaltime % 10 = 0 & totaltime > 100
             exibir_grid(grid)
         grid = executar_vida(grid)
 
-jogar_vida(iteracoes=1000, tamanho=30)
+jogar_vida(1000, 0)
