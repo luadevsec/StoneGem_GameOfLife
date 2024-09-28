@@ -1,6 +1,6 @@
 # StoneGem_GameOfLife
 
-um projeto participante de uma gen basiada em ascii2 e python vanila puro (para converter para StoneScript)
+um projeto participante de uma jam baseada em ascii2 e python vanila puro (para converter para StoneScript)
 
 ## arquitetura
 

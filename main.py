@@ -1,4 +1,4 @@
-import random
+import random # rng
 from time import sleep
 from ascii_art import full, empty  # Importando símbolos de arte ASCII para células
 
@@ -78,7 +78,7 @@ def executar_vida(grid):
 def jogar_vida(iteracoes, tamanho=10):
     grid = gerar_grid(tamanho)  # Gerar o grid inicial aleatório
     for _ in range(iteracoes):
-        sleep(0.1)  # Aguardar 0.5 segundos entre cada iteração
+        sleep(0.3)  # Aguardar x segundos entre cada iteração
         exibir_grid(grid)  # Exibir o estado atual do grid
         grid = executar_vida(grid)  # Atualizar o grid com base nas regras do jogo
 
