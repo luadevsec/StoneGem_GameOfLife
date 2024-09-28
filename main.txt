@@ -31,9 +31,9 @@ func exibir_grid()
         for celulaIdx = 0..linha.Count() - 1
             celula = linha[celulaIdx]
             ? celula = 1
-                > `@celulaIdx * 2@,@linhaIdx@,@full@`
+                > `@celulaIdx * 2@,@linhaIdx@,@full@
             :
-                > `@celulaIdx * 2@,@linhaIdx@,@empt@`
+                > `@celulaIdx * 2@,@linhaIdx@,@empt@
 
 func contar_vizinhos_vivos(linha, coluna)
     vizinhos = 0  // Reinicializar os vizinhos
