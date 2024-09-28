@@ -84,4 +84,4 @@ func jogar_vida(iteracoes)
         grid = executar_vida(grid)
 
 ? totaltime > 100
-    jogar_vida(1000, 0)
+    jogar_vida(1000)
