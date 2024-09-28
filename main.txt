@@ -11,6 +11,7 @@ var coluna_vizinha
 var novo_grid = []
 var vizinhos_vivos
 var estado_atual
+var tamanho = 0
 
 func gerar_grid(tamanho)
     ? !tamanho 
