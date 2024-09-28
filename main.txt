@@ -76,7 +76,7 @@ func executar_vida(grid)
 
 func jogar_vida(iteracoes)
     ? !tamanho
-        tamanho = 10
+        tamanho = 3
     grid = gerar_grid()
     for i = 0..iteracoes
         ? totaltime % 10 = 0
