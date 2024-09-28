@@ -17,25 +17,25 @@ func gerar_grid()
     ? !tamanho 
         tamanho = 10
     grid.Clear()  // Limpar o grid ao invés de recriá-lo
-    linha.Clear()  // Limpar a linha ao invés de recriá-la
-    for i = 0..tamanho -1
-        for j = 0..tamanho -1
+    for i = 0..tamanho - 1
+        linha = []  // Inicializar uma nova linha a cada iteração
+        for j = 0..tamanho - 1
             celula = rng % 2
             linha.Add(celula)
         grid.Add(linha)
     return grid
 
-func exibir_grid(grid)
-    for linhaIdx = 0..grid.Count() -1
+func exibir_grid()
+    for linhaIdx = 0..grid.Count() - 1
         linha = grid[linhaIdx]
-        for celulaIdx = 0..linha.Count() -1
+        for celulaIdx = 0..linha.Count() - 1
             celula = linha[celulaIdx]
             ? celula = 1
                 > `@celulaIdx * 2@,@linhaIdx@,@full@`
             :
                 > `@celulaIdx * 2@,@linhaIdx@,@empt@`
 
-func contar_vizinhos_vivos(grid, linha, coluna)
+func contar_vizinhos_vivos(linha, coluna)
     vizinhos = 0  // Reinicializar os vizinhos
     linhas_totais = grid.Count()
     colunas_totais = grid[0].Count()
@@ -50,19 +50,19 @@ func contar_vizinhos_vivos(grid, linha, coluna)
                 vizinhos += grid[linha_vizinha][coluna_vizinha]
     return vizinhos
 
-func executar_vida(grid)
+func executar_vida()
     tamanho = grid.Count()
     novo_grid.Clear()  // Limpar o novo grid ao invés de recriá-lo
     
-    for i = 0..tamanho
-        linha.Clear()  // Limpar a linha ao invés de recriá-la
-        for j = 0..tamanho
+    for i = 0..tamanho - 1
+        linha = []  // Inicializar uma nova linha a cada iteração
+        for j = 0..tamanho - 1
             linha.Add(0)  // Inicializar com zeros
         novo_grid.Add(linha)
         
     for linhaIdx = 0..tamanho - 1
         for colunaIdx = 0..tamanho - 1
-            vizinhos_vivos = contar_vizinhos_vivos(grid, linhaIdx, colunaIdx)
+            vizinhos_vivos = contar_vizinhos_vivos(linhaIdx, colunaIdx)
             estado_atual = grid[linhaIdx][colunaIdx]
             ? estado_atual = 1 & (vizinhos_vivos < 2 | vizinhos_vivos > 3)
                 novo_grid[linhaIdx][colunaIdx] = 0
@@ -72,16 +72,16 @@ func executar_vida(grid)
                 novo_grid[linhaIdx][colunaIdx] = 1
             :
                 novo_grid[linhaIdx][colunaIdx] = estado_atual
-    return novo_grid
+    grid = novo_grid  // Substituir o grid original pelo novo grid
 
 func jogar_vida(iteracoes)
     ? !tamanho
-        tamanho = 3
-    grid = gerar_grid()
+        tamanho = 10
+    gerar_grid()
     for i = 0..iteracoes
         ? totaltime % 10 = 0
-            exibir_grid(grid)
-        grid = executar_vida(grid)
+            exibir_grid()
+        executar_vida()
 
 ? totaltime > 100
     jogar_vida(1000)
