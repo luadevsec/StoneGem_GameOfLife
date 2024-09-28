@@ -1,7 +1,3 @@
-from time import sleep
-from ascii_art import full, empty  # Importando símbolos de arte ASCII para células
-
-# Função que gera um grid aleatório de tamanho SIZE x SIZE (default é 10x10)
 func gerar_grid(tamanho)
     ? !tamanho 
         tamanho = 10
@@ -9,45 +5,34 @@ func gerar_grid(tamanho)
     for i = 0..tamanho
         var linha = []
         for j = 0..tamanho
-            // Gerar uma célula aleatória: 0 = célula morta, 1 = célula viva
             var celula = rng % 2
             linha.Add(celula)
         grid.Add(linha)
 
-
-# Função que exibe o grid na tela com arte ASCII para células vivas e mortas
 func exibir_grid(grid)
     var full = "██"
-    var empt = "  "
-
+    var empt = "  "
     for linha = 0..grid.Count():
         for celula = 0..linha.Count():
-            // Se a célula for viva (1), exibir "full", se for morta (0), exibir "empty"
             print(full if celula == 1 else empt, end='')
             ? celula = 1
                 > `@celula * 2@,@linha@,@full@
             :
                 > `@celula * 2@,@linha@,@empt@
 
-// Função que calcula o número de vizinhos vivos ao redor de uma célula específica
 func contar_vizinhos_vivos(grid, linha, coluna)
     var vizinhos = 0
     var linhas_totais = grid.Count()
     var colunas_totais = grid[0].Count()
-    
-    // Verifica as 8 direções ao redor da célula (cima, baixo, esquerda, direita, diagonais)
     for i = -1..2
         for j = -1..2
             ? i = 0 & j = 0
                 continue
             var linha_vizinha = linha + i
             var coluna_vizinha = coluna + j
-
             ? linhaVizinha >= 0 & linhaVizinha < linhasTotais & colunaVizinha >= 0 & colunaVizinha < colunasTotais
-                vizinhos += grid[linha_vizinha][coluna_vizinha]  // Contar célula viva (1)
+                vizinhos += grid[linha_vizinha][coluna_vizinha]
     return vizinhos
-
-// Função que executa uma iteração do Game of Life e retorna o novo grid atualizado
 
 func executar_vida(grid)
     var tamanho = grid.Count()
@@ -55,41 +40,30 @@ func executar_vida(grid)
     for i = 0..tamanho
         var linha = []
         for j = 0..tamanho
-            linha.Add(0)  // Inicializa com 0
+            linha.Add(0)
         novo_grid.Add(linha)
-
-
-    // Itera sobre cada célula do grid
     for linha = 0..tamanho
         for coluna = 0..tamanho
             var vizinhos_vivos = contar_vizinhos_vivos(grid, linha, coluna)
             var estado_atual = grid[linha][coluna]
-
-            // Regras do Jogo da Vida de Conway:
-            // 1. Célula viva com menos de 2 ou mais de 3 vizinhos vivos morre (solidão/superpopulação)
             ? estado_atual = 1 & (vizinhos_vivos < 2 | vizinhos_vivos > 3)
-                novo_grid[linha][coluna] = 0  // Célula morre
-            // 2. Célula viva com 2 ou 3 vizinhos vivos continua viva
+                novo_grid[linha][coluna] = 0
             :? estado_atual = 1 & (vizinhos_vivos = 2 | vizinhos_vivos = 3)
-                novo_grid[linha][coluna] = 1  // Célula continua viva
-            // 3. Célula morta com exatamente 3 vizinhos vivos se torna viva (reprodução)
+                novo_grid[linha][coluna] = 1
             :? estado_atual = 0 and vizinhos_vivos = 3
-                novo_grid[linha][coluna] = 1  // Célula nasce
+                novo_grid[linha][coluna] = 1
             :
-                novo_grid[linha][coluna] = estado_atual  // Célula mantém o estado atual
+                novo_grid[linha][coluna] = estado_atual
     return novo_grid
 
-    // Função principal que controla as iterações do jogo e exibe o grid a cada passo
-    func jogar_vida(iteracoes, tamanho)
-        ? !tamanho
-            tamanho = 10
-        var grid = gerar_grid(tamanho)  // Gerar o grid inicial aleatório
-        for i = 0..iteracoes
-            sleep(0.3)  // Aguardar x segundos entre cada iteração
-            ? totaltime % 10 = 0 & totaltime > 100
-                exibir_grid(grid)  // Exibir o estado atual do grid
-            grid = executar_vida(grid)  // Atualizar o grid com base nas regras do jogo
+func jogar_vida(iteracoes, tamanho)
+    ? !tamanho
+        tamanho = 10
+    var grid = gerar_grid(tamanho)
+    for i = 0..iteracoes
+        sleep(0.3)
+        ? totaltime % 10 = 0 & totaltime > 100
+            exibir_grid(grid)
+        grid = executar_vida(grid)
 
-
-
-jogar_vida(iteracoes=1000, tamanho=30)  // Rodar o jogo por 10 iterações com um grid de 20x20
+jogar_vida(iteracoes=1000, tamanho=30)
