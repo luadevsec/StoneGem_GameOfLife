@@ -13,7 +13,7 @@ var vizinhos_vivos
 var estado_atual
 var tamanho = 0
 
-func gerar_grid(tamanho)
+func gerar_grid()
     ? !tamanho 
         tamanho = 10
     grid.Clear()  // Limpar o grid ao invés de recriá-lo
@@ -74,10 +74,10 @@ func executar_vida(grid)
                 novo_grid[linhaIdx][colunaIdx] = estado_atual
     return novo_grid
 
-func jogar_vida(iteracoes, tamanho)
+func jogar_vida(iteracoes)
     ? !tamanho
         tamanho = 10
-    grid = gerar_grid(tamanho)
+    grid = gerar_grid()
     for i = 0..iteracoes
         ? totaltime % 10 = 0
             exibir_grid(grid)
