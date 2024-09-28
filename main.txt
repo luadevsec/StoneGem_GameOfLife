@@ -1,76 +1,86 @@
+var grid = []
+var linha = []
+var celula
+var full = "██"
+var empt = "  "
+var vizinhos = 0
+var linhas_totais
+var colunas_totais
+var linha_vizinha
+var coluna_vizinha
+var novo_grid = []
+var vizinhos_vivos
+var estado_atual
+
 func gerar_grid(tamanho)
     ? !tamanho 
         tamanho = 10
-    var grid = []
-    var linha = []
-    var celula
+    grid.Clear()  // Limpar o grid ao invés de recriá-lo
+    linha.Clear()  // Limpar a linha ao invés de recriá-la
     for i = 0..tamanho
         for j = 0..tamanho
             celula = rng % 2
             linha.Add(celula)
         grid.Add(linha)
+    return grid
 
 func exibir_grid(grid)
-    var full = "██"
-    var empt = "  "
-    for linha = 0..grid.Count()
-        for celula = 0..linha.Count()
+    for linhaIdx = 0..grid.Count()
+        linha = grid[linhaIdx]
+        for celulaIdx = 0..linha.Count()
+            celula = linha[celulaIdx]
             ? celula = 1
-                > `@celula * 2@,@linha@,@full@
+                > `@celulaIdx * 2@,@linhaIdx@,@full@`
             :
-                > `@celula * 2@,@linha@,@empt@
+                > `@celulaIdx * 2@,@linhaIdx@,@empt@`
 
 func contar_vizinhos_vivos(grid, linha, coluna)
-    var vizinhos = 0
-    var linhas_totais = grid.Count()
-    var colunas_totais = grid[0].Count()
+    vizinhos = 0  // Reinicializar os vizinhos
+    linhas_totais = grid.Count()
+    colunas_totais = grid[0].Count()
 
-    var linha_vizinha
-    var coluna_vizinha
-    
     for i = -1..2
         for j = -1..2
             ? i = 0 & j = 0
                 continue
             linha_vizinha = linha + i
             coluna_vizinha = coluna + j
-            ? linhaVizinha >= 0 & linhaVizinha < linhasTotais & colunaVizinha >= 0 & colunaVizinha < colunasTotais
+            ? linha_vizinha >= 0 & linha_vizinha < linhas_totais & coluna_vizinha >= 0 & coluna_vizinha < colunas_totais
                 vizinhos += grid[linha_vizinha][coluna_vizinha]
     return vizinhos
 
 func executar_vida(grid)
-    var tamanho = grid.Count()
-    var novo_grid = []
-    var linha 
-    var vizinhos_vivos
-    var estado_atual
+    tamanho = grid.Count()
+    novo_grid.Clear()  // Limpar o novo grid ao invés de recriá-lo
     
     for i = 0..tamanho
-        linha = []
+        linha.Clear()  // Limpar a linha ao invés de recriá-la
         for j = 0..tamanho
-            linha.Add(0)
+            linha.Add(0)  // Inicializar com zeros
         novo_grid.Add(linha)
-    for linha = 0..tamanho
-        for coluna = 0..tamanho
-            vizinhos_vivos = contar_vizinhos_vivos(grid, linha, coluna)
-            estado_atual = grid[linha][coluna]
+        
+    for linhaIdx = 0..tamanho
+        for colunaIdx = 0..tamanho
+            vizinhos_vivos = contar_vizinhos_vivos(grid, linhaIdx, colunaIdx)
+            estado_atual = grid[linhaIdx][colunaIdx]
             ? estado_atual = 1 & (vizinhos_vivos < 2 | vizinhos_vivos > 3)
-                novo_grid[linha][coluna] = 0
+                novo_grid[linhaIdx][colunaIdx] = 0
             :? estado_atual = 1 & (vizinhos_vivos = 2 | vizinhos_vivos = 3)
-                novo_grid[linha][coluna] = 1
+                novo_grid[linhaIdx][colunaIdx] = 1
             :? estado_atual = 0 & vizinhos_vivos = 3
-                novo_grid[linha][coluna] = 1
+                novo_grid[linhaIdx][colunaIdx] = 1
             :
-                novo_grid[linha][coluna] = estado_atual
+                novo_grid[linhaIdx][colunaIdx] = estado_atual
     return novo_grid
 
 func jogar_vida(iteracoes, tamanho)
     ? !tamanho
         tamanho = 10
-    var grid = gerar_grid(tamanho)
+    grid = gerar_grid(tamanho)
     for i = 0..iteracoes
-        ? totaltime % 10 = 0 & totaltime > 100
+        ? totaltime % 10 = 0
             exibir_grid(grid)
         grid = executar_vida(grid)
 
-jogar_vida(1000, 0)
+? totaltime > 100
+    jogar_vida(1000, 0)
